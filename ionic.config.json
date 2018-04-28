@@ -1,6 +1,6 @@
 {
   "name": "cryptoWatcher",
-  "app_id": "",
+  "app_id": "96343e46",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

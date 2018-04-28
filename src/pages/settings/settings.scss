@@ -1,0 +1,40 @@
+page-settings {
+	ion-content {
+	background-image: url('../assets/imgs/background.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	}
+	ion-item {
+		margin-bottom: 20px!important;
+	}
+	ion-card {
+		color: color($colors, light);
+		border: 1px solid color($colors, light);
+	}
+	.card-header-md ion-icon {
+		color: color($colors, light);
+	}
+	
+	
+	.item-md {
+		background-color: transparent;
+	}
+	
+	[md=md-arrow-round-up] {
+		color: green;
+	}
+	[md=md-arrow-round-down] {
+		color: red;
+	}
+	.mySelect {
+		color: color($colors, light);
+		max-width:200px !important;
+	}
+	#text {
+		color: color($colors, light);
+	}
+	#addBtn {
+		background-color: rgba(240,240,240, 0.1);
+		border: 1px solid color($colors, light);
+	}
+}

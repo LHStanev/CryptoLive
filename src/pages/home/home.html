@@ -1,17 +1,71 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+<ion-header no-border>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-sm-12>
+          <ion-navbar>
+            <ion-title text-center>CryptoLive</ion-title>
+          </ion-navbar>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-1></ion-col>
+      <ion-col col-10>
+        <ion-item text-start>
+          <ion-label floating>Find currency</ion-label>
+          <ion-input type="text" #inputData></ion-input>
+          <button item-end id="searchButton" (click)="getData(inputData.value)"><ion-icon item-end md="md-search"></ion-icon></button>
+        </ion-item>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content padding> 
+  <ion-grid>
+    <ion-row>
+      <ion-col col-sm-12>
+        
+        <div class="custom-card" *ngIf="responseSuccess">
+          <ion-card>
+          <ion-card-header>
+            <ion-row>
+              <ion-col col-sm-6>
+                {{inputVal | uppercase}}
+              </ion-col>
+              <ion-col col-sm-6 text-end>
+                <span class="price">${{ currencyInfoNew.USD }}</span>
+                <span *ngIf="currencyInfoOld">
+                <span *ngIf="currencyInfoNew.USD < currencyInfoOld.USD; then arrowDown"></span>
+                <span *ngIf="currencyInfoNew.USD > currencyInfoOld.USD; then arrowUp"></span>
+                <span *ngIf="currencyInfoNew.USD == currencyInfoOld.USD; then arrowForward"></span>
+            </span>
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          <ion-card-content>
+            <p>24h</p>
+            <p>Open: ${{ dailyInfo.Data[0].open }}</p>
+            <p>Close: ${{ dailyInfo.Data[0].close }}</p>
+            <p>High: ${{ dailyInfo.Data[0].high }}</p>
+            <p>Low: ${{ dailyInfo.Data[0].low }}</p>
+          </ion-card-content>
+        </ion-card>
+        </div>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+<ng-template #arrowUp>
+  <ion-icon md="md-arrow-round-up"></ion-icon>
+</ng-template>
+
+<ng-template #arrowDown>
+  <ion-icon md="md-arrow-round-down"></ion-icon>
+</ng-template>
+
+<ng-template #arrowForward>
+  <ion-icon md="md-arrow-round-forward"></ion-icon>
+</ng-template>

@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>
+      Favourites
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding *ngIf="favCurrenciesNew">
+	<ion-grid>
+    <ion-row>
+      <ion-col col-sm-12>
+        <p text-end>Note* Data is updated every 5 seconds</p>
+         <div class="custom-card" *ngFor="let item of favCurrenciesNew">
+           <ion-card>
+              <ion-card-header>
+                {{ item[0] }}
+              </ion-card-header>
+              <ion-card-content>
+                {{ item[1] }}
+                <span *ngIf="favCurrenciesOld">
+                  <span *ngFor="let oldItem of favCurrenciesOld">
+                      <span *ngIf="oldItem[0] == item[0]">
+                          <span *ngIf="item[1] < oldItem[1]; then arrowDown"></span>
+                           <span *ngIf="item[1] > oldItem[1]; then arrowUp"></span>
+                           <span *ngIf="item[1] == oldItem[1]; then arrowForward"></span>
+                      </span>
+                  </span>
+                </span>
+              </ion-card-content>
+            </ion-card>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+
+<ng-template #arrowUp>
+  <ion-icon md="md-arrow-round-up"></ion-icon>
+</ng-template>
+
+<ng-template #arrowDown>
+  <ion-icon md="md-arrow-round-down"></ion-icon>
+</ng-template>
+
+<ng-template #arrowForward>
+  <ion-icon md="md-arrow-round-forward"></ion-icon>
+</ng-template>
