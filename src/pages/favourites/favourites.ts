@@ -8,13 +8,13 @@ import { AlertProvider } from '../../providers/alert/alert';
   selector: 'page-favourites',
   templateUrl: 'favourites.html'
 })
-export class FavouritesPage implements OnInit{
+export class FavouritesPage{
 
   public favCurrenciesNew = [];
   public favCurrenciesOld;
   public arrPairs = [];
   public outputData = [];
-  public data: Array;
+  public data: any;
   public interval: any;
 
   constructor(
