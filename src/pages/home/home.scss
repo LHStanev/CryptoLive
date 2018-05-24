@@ -20,9 +20,6 @@ page-home {
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
-	ion-item {
-		margin-top: 30px!important;
-	}
 	
 	.item-md {
 		background-color: transparent;
@@ -44,4 +41,25 @@ page-home {
 	.price {
 		color: white;
 	}
+
+	.itemBig, .itemSmall {
+		color: #fff;
+	}
+	.itemBig {
+		color: color( $colors, primary);
+		font-size: 150%;
+		font-weight: bold;
+	}
+	#list {
+
+		margin-top: 10px;
+		.item-md.item-block .item-inner, .list-md .item-block .item-inner {
+			background-color: rgba(100,100,100, 0.5) ;
+			border-bottom: 0;
+			border-radius: 4px;
+			margin:7px 2px;
+			box-shadow: 0px 0px 8px color($colors, light);
+		}
+	}
+
 }

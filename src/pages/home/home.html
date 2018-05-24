@@ -12,9 +12,16 @@
       <ion-col col-10>
         <ion-item text-start>
           <ion-label floating>Find currency</ion-label>
-          <ion-input type="text" #inputData></ion-input>
+          <ion-input id="searchBox" type="text" #inputData [(ngModel)]="textInput" (keyup)="getItems($event)"></ion-input>
           <button item-end id="searchButton" (click)="getData(inputData.value)"><ion-icon item-end md="md-search"></ion-icon></button>
         </ion-item>
+        <div id="list">
+          <ion-list *ngIf="showList">
+            <ion-item *ngFor="let item of list" (click)="copyValue(item[0])">
+              <span class="itemBig">{{ item[0] }}</span> <span class="itemSmall"> {{ item[1] }}</span>
+            </ion-item>
+          </ion-list>
+        </div>
       </ion-col>
       <ion-col col-1></ion-col>
     </ion-row>
@@ -27,30 +34,32 @@
       <ion-col col-sm-12>
         
         <div class="custom-card" *ngIf="responseSuccess">
-          <ion-card>
-          <ion-card-header>
-            <ion-row>
-              <ion-col col-sm-6>
-                {{inputVal | uppercase}}
-              </ion-col>
-              <ion-col col-sm-6 text-end>
-                <span class="price">${{ currencyInfoNew.USD }}</span>
-                <span *ngIf="currencyInfoOld">
-                <span *ngIf="currencyInfoNew.USD < currencyInfoOld.USD; then arrowDown"></span>
-                <span *ngIf="currencyInfoNew.USD > currencyInfoOld.USD; then arrowUp"></span>
-                <span *ngIf="currencyInfoNew.USD == currencyInfoOld.USD; then arrowForward"></span>
-            </span>
-              </ion-col>
-            </ion-row>
-          </ion-card-header>
-          <ion-card-content>
-            <p>24h</p>
-            <p>Open: ${{ dailyInfo.Data[0].open }}</p>
-            <p>Close: ${{ dailyInfo.Data[0].close }}</p>
-            <p>High: ${{ dailyInfo.Data[0].high }}</p>
-            <p>Low: ${{ dailyInfo.Data[0].low }}</p>
-          </ion-card-content>
-        </ion-card>
+          <div *ngIf="showCard">
+            <ion-card>
+              <ion-card-header>
+                <ion-row>
+                  <ion-col col-sm-6>
+                    {{inputVal | uppercase}}
+                  </ion-col>
+                  <ion-col col-sm-6 text-end>
+                    <span class="price">${{ currencyInfoNew.USD }}</span>
+                    <span *ngIf="currencyInfoOld">
+                  <span *ngIf="currencyInfoNew.USD < currencyInfoOld.USD; then arrowDown"></span>
+                  <span *ngIf="currencyInfoNew.USD > currencyInfoOld.USD; then arrowUp"></span>
+                  <span *ngIf="currencyInfoNew.USD == currencyInfoOld.USD; then arrowForward"></span>
+              </span>
+                  </ion-col>
+                </ion-row>
+              </ion-card-header>
+              <ion-card-content>
+                <p>24h</p>
+                <p>Open: ${{ dailyInfo.Data[0].open }}</p>
+                <p>Close: ${{ dailyInfo.Data[0].close }}</p>
+                <p>High: ${{ dailyInfo.Data[0].high }}</p>
+                <p>Low: ${{ dailyInfo.Data[0].low }}</p>
+              </ion-card-content>
+            </ion-card>
+          </div>
         </div>
 
       </ion-col>

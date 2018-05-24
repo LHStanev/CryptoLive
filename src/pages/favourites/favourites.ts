@@ -8,12 +8,14 @@ import { AlertProvider } from '../../providers/alert/alert';
   selector: 'page-favourites',
   templateUrl: 'favourites.html'
 })
-export class FavouritesPage implements OnInit {
+export class FavouritesPage implements OnInit{
 
   public favCurrenciesNew = [];
   public favCurrenciesOld;
   public arrPairs = [];
   public outputData = [];
+  public data: Array;
+  public interval: any;
 
   constructor(
   	public navCtrl: NavController,
@@ -22,7 +24,9 @@ export class FavouritesPage implements OnInit {
     public alert: AlertProvider) {
   }
 
-  ngOnInit () {
+  //Lifecycle events
+
+    ionViewWillEnter () {
 
   	this.storage.get('favourites').then(
   		(favs) => {
@@ -47,7 +51,7 @@ export class FavouritesPage implements OnInit {
         listLeft = listLeft.substr(1);
         listRight = listRight.substr(1);
         this.getData(listLeft, listRight);
-        setInterval( () => { this.getData( listLeft,listRight) }, 5000);
+        this.interval = setInterval( () => { this.getData( listLeft,listRight) }, 5000);
         } else {
             this.alert.presentAlert('Oops', 'You have no favourites yet. Go to settings and add some.');
         }
@@ -56,17 +60,23 @@ export class FavouritesPage implements OnInit {
     () => this.alert.presentAlert('Oops', 'Cannot access phone memory, please try again later') );
   }
 
+    ionViewDidLeave() {
+      this.data.unsubscribe();
+      clearInterval(this.interval);
+      console.log('Unsubscribed');
+  }
+
+
 
   // Get data from API
   getData(from, to) {	
-  	this.http.getFavourites(from, to).subscribe(
+  	this.data = this.http.getFavourites(from, to).subscribe(
   		next => {
-
+            console.log(next);
             if(this.favCurrenciesNew.length !== 0) {
   				this.favCurrenciesOld = this.favCurrenciesNew;
   				this.favCurrenciesNew = [];
   			}
-
   			// Iterate through the array with pairs and assign a value to each one
   			for( let pair of this.arrPairs ) {
                 if(next[pair[0]] && next[pair[0]][pair[1]] ) {

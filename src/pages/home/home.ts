@@ -1,31 +1,49 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { HttpProvider } from '../../providers/http/http';
 import { AlertProvider } from '../../providers/alert/alert';
+
+import { listCurrencies } from "../../data/listCurrencies";
+
+
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-	public currencyInfoNew;
-  public currencyInfoOld;
-  public dailyInfo;
-	public responseSuccess = false;
-	public inputVal;
-  public intervalIsOn = null;
+    @Input() textInput: string;
+	currencyInfoNew;
+    currencyInfoOld;
+    dailyInfo;
+	responseSuccess = false;
+	inputVal;
+    intervalIsOn = null;
+    showList: boolean;
+    showCard: boolean;
+    list: [];
+    data: any;  //Information about the currency sought after
 
   constructor(
   	public navCtrl: NavController,
   	public http: HttpProvider,
-    public alert: AlertProvider) {
+    public alert: AlertProvider) { }
 
-  }
+    // Lifecycle events
+
+    ionViewDidLeave() {
+      this.data.unsubscribe();
+      clearInterval(this.intervalIsOn);
+      this.showCard = false;
+      this.textInput = '';
+    }
+
 
   getData(input) {
     if(null != this.intervalIsOn) {
       clearInterval(this.intervalIsOn);
     }
-    this.http.getCurrencyInfo(input).subscribe(
+    this.data = this.http.getCurrencyInfo(input).subscribe(
   		next => {
         this.inputVal = input;
   			if(next.Response === 'Error') {
@@ -46,9 +64,10 @@ export class HomePage {
   }
 
   getCurrentPrice(input) {
-    let data =this.http.getCurrencyPrice(input)
+    this.http.getCurrencyPrice(input)
           .subscribe(
             data => {
+                console.log(data);
                 if(this.currencyInfoNew) {
                 this.currencyInfoOld = this.currencyInfoNew;
           }
@@ -57,5 +76,27 @@ export class HomePage {
       },
       () => console.log('error')
       );
+  }
+
+  getItems (e) {
+      this.showCard = false;
+      this.list = listCurrencies;
+      let input = e.target.value;
+
+      if( input && input !== '') {
+          this.list = this.list.filter( (item) => {
+              return (item[0].toLowerCase().indexOf(input.toLowerCase()) !== -1 ||
+                  item[1].toLowerCase().indexOf(input.toLowerCase()) !== -1 );
+          });
+          this.showList = true;
+      } else {
+          this.showList = false;
+      }
+  }
+
+  copyValue(currency) {
+     this.showList = false;
+     this.getData(currency);
+     this.showCard = true;
   }
 }

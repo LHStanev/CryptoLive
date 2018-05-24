@@ -93,7 +93,6 @@ export class SettingsPage implements OnInit{
   		res => {
   			if(res.indexOf(',') !== -1) {
   				let dataStorage = res.split(',');
-          console.log(dataStorage);
 	  			for (let p in dataStorage) {
 	  				if(dataStorage[p] == pair) {
 	  					dataStorage.splice(p, 1);
