@@ -21,7 +21,7 @@ export class HomePage {
     intervalIsOn = null;
     showList: boolean;
     showCard: boolean;
-    list: [];
+    list: any;
     data: any;  //Information about the currency sought after
 
   constructor(
