@@ -50,19 +50,6 @@ page-settings {
 		}
 	}
 
-	.searchBtn {
-		height: 80%;
-		margin: 0px;
-		width:15%;
-		background: none;
-		color: #fff;
-		font-size: 20px;
-		position: relative;
-		top:10px;
-	}
-	.searchBtn:active {
-		color: color($colors, primary);
-	}
 
 	#list {
 		margin-top: 10px;
@@ -82,5 +69,16 @@ page-settings {
 		color: color( $colors, primary);
 		font-size: 150%;
 		font-weight: bold;
+	}
+
+	.searchBtn {
+		height: 80%;
+		margin: 0px;
+		background: none;
+		color: #fff;
+		font-size: 20px;
+	}
+	.searchBtn:active {
+		color: color($colors, primary);
 	}
 }

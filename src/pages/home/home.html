@@ -12,7 +12,7 @@
       <ion-col col-10>
         <ion-item text-start>
           <ion-label floating>Find currency</ion-label>
-          <ion-input id="searchBox" type="text" #inputData [(ngModel)]="textInput" (keyup)="getItems($event)"></ion-input>
+          <ion-input class="searchBtn" type="text" #inputData [(ngModel)]="textInput" (keyup)="getItems($event)"></ion-input>
         </ion-item>
         <div id="list">
           <ion-list *ngIf="showList">

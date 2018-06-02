@@ -2,17 +2,14 @@ page-home {
 	form, input, optgroup {
 		color: color($colors, primary);
 	}
-		#searchButton {
+	.searchBtn {
 		height: 80%;
 		margin: 0px;
-		width:15%;
 		background: none;
 		color: #fff;
 		font-size: 20px;
-		position: relative;
-		top:10px;
 	}
-	#searchButton:active {
+	.searchBtn:active {
 		color: color($colors, primary);
 	}
 	ion-content {
