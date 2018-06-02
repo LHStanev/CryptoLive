@@ -13,16 +13,16 @@ import { listCurrencies } from "../../data/listCurrencies";
 })
 export class HomePage {
     @Input() textInput: string;
-	currencyInfoNew;
-    currencyInfoOld;
-    dailyInfo;
+	currencyInfoNew: any;
+    currencyInfoOld: any;
+    dailyInfo: any;
 	responseSuccess = false;
-	inputVal;
+	inputVal: any;
     intervalIsOn = null;
     showList: boolean;
     showCard: boolean;
     list: any;
-    data: any;  //Information about the currency sought after
+    data = null;  //Information about the currency sought after
 
   constructor(
   	public navCtrl: NavController,
@@ -32,8 +32,10 @@ export class HomePage {
     // Lifecycle events
 
     ionViewDidLeave() {
-      this.data.unsubscribe();
-      clearInterval(this.intervalIsOn);
+      if (null !== this.data) {
+          this.data.unsubscribe();
+          clearInterval(this.intervalIsOn);
+      }
       this.showCard = false;
       this.textInput = '';
     }
@@ -67,14 +69,13 @@ export class HomePage {
     this.http.getCurrencyPrice(input)
           .subscribe(
             data => {
-                console.log(data);
                 if(this.currencyInfoNew) {
                 this.currencyInfoOld = this.currencyInfoNew;
           }
           this.currencyInfoNew = data;
           this.responseSuccess = true;
       },
-      () => console.log('error')
+      (err) => this.alert.presentAlert('Error', err)
       );
   }
 
@@ -98,5 +99,6 @@ export class HomePage {
      this.showList = false;
      this.getData(currency);
      this.showCard = true;
+     this.textInput = currency;
   }
 }

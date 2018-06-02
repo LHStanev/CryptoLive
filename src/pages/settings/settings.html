@@ -11,44 +11,53 @@
     <ion-row>
       <ion-col col-5>
        <ion-item>
-          <ion-select class="mySelect" #first>
-          <ion-option selected>Select</ion-option>
-          <ion-option *ngFor="let c of listCurrencies">{{ c }}</ion-option>
-        </ion-select>
+           <ion-label floating>Add currency</ion-label>
+           <ion-input class="searchBtn" type="text" #inputDataLeft [(ngModel)]="textInputLeft" (keyup)="getItems($event, 'left')"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-2> <p id='text' text-center>TO</p> </ion-col>
       <ion-col col-5>
         <ion-item>
-          <ion-select class="mySelect" #second>
-          <ion-option selected>Select</ion-option>
-          <ion-option *ngFor="let c of listCurrencies">{{ c }}</ion-option>
-        </ion-select>
+            <ion-label floating>Add currency</ion-label>
+            <ion-input class="searchBtn" type="text" #inputDataRight [(ngModel)]="textInputRight" (keyup)="getItems($event, 'right')"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-12 text-center>
-        <button id="addBtn" ion-button round (click)="addToFavourites(first.value, second.value)">Add to favourites</button>
-      </ion-col>
+        <ion-col col-12>
+            <div id="list">
+                <ion-list *ngIf="showList">
+                    <ion-item *ngFor="let item of list" (click)="copyValue(item[0], inputDataLeft)">
+                        <span class="itemBig">{{ item[0] }}</span> <span class="itemSmall"> {{ item[1] }}</span>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-sm-10>
-        <div *ngFor="let pair of favourites">
-          <ion-card>
-          <ion-card-header>
-            <ion-row>
-              <ion-col col-10 text-start>
-                <span>{{ pair }}</span>
-              </ion-col>
-              <ion-col col-2 text-end>
-              <ion-icon item-end ios="ios-trash" md="md-trash" (click)="removePair(pair)"></ion-icon>
-              </ion-col>
-            </ion-row>
-          </ion-card-header>
-        </ion-card>
-        </div>
-      </ion-col>
-    </ion-row>
+    <div *ngIf="!showList">
+        <ion-row>
+            <ion-col col-12 text-center>
+                <button id="addBtn" ion-button round (click)="addToFavourites(inputDataLeft.value, inputDataRight.value)">Add to favourites</button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-sm-10>
+                <div *ngFor="let pair of favourites">
+                    <ion-card>
+                        <ion-card-header>
+                            <ion-row>
+                                <ion-col col-10 text-start>
+                                    <span>{{ pair }}</span>
+                                </ion-col>
+                                <ion-col col-2 text-end>
+                                    <ion-icon item-end ios="ios-trash" md="md-trash" (click)="removePair(pair)"></ion-icon>
+                                </ion-col>
+                            </ion-row>
+                        </ion-card-header>
+                    </ion-card>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div>
   </ion-grid>
 </ion-content>

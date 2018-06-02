@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AlertProvider } from '../../providers/alert/alert';
+
+import { listCurrencies } from "../../data/listCurrencies";
 
 @Component({
   selector: 'page-settings',
   templateUrl: 'settings.html'
 })
 export class SettingsPage implements OnInit{
-	public listCurrencies = ['BTC', 'ETH','XRP', 'USD', 'EUR', 'GBP', 'BGN'];
-	public favourites;
+  @Input() textInputLeft: string;
+  @Input() textInputRight: string;
+  favourites: any;
+  currentSide: string;
+  showList: boolean;
+  list: any;
   constructor(
   	public navCtrl: NavController,
   	public storage: Storage,
@@ -38,7 +44,7 @@ export class SettingsPage implements OnInit{
   	let firstStr = first.toString();
   	let secondStr = second.toString();
 	
-  		if( (firstStr !== 'Select' && secondStr !== 'Select') && firstStr != secondStr ) {
+  		if( (firstStr !== '' && secondStr !== '') && firstStr != secondStr ) {
   			this.storage.get('favourites').then(
   			res => {
   				let pair = firstStr + '/' + secondStr;
@@ -83,6 +89,9 @@ export class SettingsPage implements OnInit{
   		} else {
   			this.alert.presentAlert('Oops', 'Please choose two currencies first.');
   		}
+
+  		this.textInputLeft = '';
+  		this.textInputRight = '';
   }
 
   //remove pair from list (need to check how many pairs are there before and after the deletion)
@@ -114,4 +123,35 @@ export class SettingsPage implements OnInit{
           } 
   		});
   }
+
+  getItems(event, side) {
+      //need this in the copyValue method
+      this.currentSide = side;
+      this.list = listCurrencies;
+      let input = event.target.value;
+      if(null !== input && '' !== input) {
+          this.list = this.list.filter( (item) => {
+             return (item[0].toLowerCase().indexOf(input.toLowerCase()) !== -1 ||
+                 item[1].toLowerCase().indexOf(input.toLowerCase()) !== -1)
+          });
+          this.showList = true;
+      } else {
+          this.showList = false;
+      }
+
+  }
+
+    copyValue(currency) {
+
+      switch (this.currentSide) {
+          case 'left':
+              this.textInputLeft = currency;
+              break;
+          case 'right':
+              this.textInputRight = currency;
+              break;
+      }
+
+        this.showList = false;
+    }
 }

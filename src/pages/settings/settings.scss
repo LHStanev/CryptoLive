@@ -37,4 +37,50 @@ page-settings {
 		background-color: rgba(240,240,240, 0.1);
 		border: 1px solid color($colors, light);
 	}
+
+	#list {
+
+		margin-top: 10px;
+		.item-md.item-block .item-inner, .list-md .item-block .item-inner {
+			background-color: rgba(100,100,100, 0.5) ;
+			border-bottom: 0;
+			border-radius: 4px;
+			margin:7px 2px;
+			box-shadow: 0px 0px 8px color($colors, light);
+		}
+	}
+
+	.searchBtn {
+		height: 80%;
+		margin: 0px;
+		width:15%;
+		background: none;
+		color: #fff;
+		font-size: 20px;
+		position: relative;
+		top:10px;
+	}
+	.searchBtn:active {
+		color: color($colors, primary);
+	}
+
+	#list {
+		margin-top: 10px;
+		.item-md.item-block .item-inner, .list-md .item-block .item-inner {
+			background-color: rgba(100, 100, 100, 0.5);
+			border-bottom: 0;
+			border-radius: 4px;
+			margin: 7px 2px;
+			box-shadow: 0px 0px 8px color($colors, light);
+		}
+	}
+
+	.itemBig, .itemSmall {
+		color: #fff;
+	}
+	.itemBig {
+		color: color( $colors, primary);
+		font-size: 150%;
+		font-weight: bold;
+	}
 }
