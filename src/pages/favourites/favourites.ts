@@ -61,7 +61,9 @@ export class FavouritesPage{
   }
 
     ionViewDidLeave() {
-      this.data.unsubscribe();
+      if ( undefined !== this.data) {
+          this.data.unsubscribe();
+      }
       clearInterval(this.interval);
       console.log('Unsubscribed');
   }

@@ -30,4 +30,7 @@ export const listCurrencies = [
     ['LSK', 'Lisk'],
     ['AE', 'Aeternity'],
     ['DCR', 'Decred'],
+    ['USD', 'US Dollar'],
+    ['EUR', 'Euro'],
+    ['WAN', 'Wanchain']
 ];
